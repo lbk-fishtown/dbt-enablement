@@ -21,6 +21,11 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
+
+vars: 
+  Tolerance_Verify: 3
+  Tolerance_OK: 30
+
 seeds:
   jaffle_shop:
     +schema: raw
@@ -28,6 +33,9 @@ seeds:
       +enabled: "{{ var('load_source_data', false) }}"
 
 models:
+  +persist_docs:
+    relation: true
+    columns: true
   jaffle_shop:
     staging:
       +materialized: view

@@ -1,0 +1,18 @@
+sources:
+  - name: monitoring_dbo
+    description: Operational data currency monitoring history from the Monitoring database.
+    database: MONITORING
+    schema: DBO
+    tables:
+      - name: data_currency_history
+        identifier: DataCurrencyHistory
+        description: One row per executed data currency check.
+
+  - name: monitoring_reference
+    description: Reference configuration for data currency monitoring.
+    database: MONITORING
+    schema: REFERENCE
+    tables:
+      - name: data_currency_reference
+        identifier: DataCurrencyReferenceTable
+        description: Expected schedules and tolerances for monitored source tables.

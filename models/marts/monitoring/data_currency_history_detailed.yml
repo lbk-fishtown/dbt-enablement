@@ -1,0 +1,38 @@
+models:
+  - name: data_currency_history_detailed
+    description: |
+      Detailed monitoring history with expected data currency thresholds and a comparison
+      of each observed row count to the maximum seen in the preceding 30 days. The grain
+      is one row per database, schema, table, monitored column, and check timestamp.
+    columns:
+      - name: data_currency_history_detail_id
+        description: Surrogate key for a monitored object, column, and check timestamp.
+        data_tests:
+          - not_null
+          - unique
+      - name: checked_on
+        description: Timestamp when the source data currency check ran.
+        data_tests:
+          - not_null
+      - name: data_as_at
+        description: Latest timestamp represented by the checked source data.
+      - name: data_currency_check
+        description: Currency status based on the configured expected run time and tolerance vars.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - DataAsAt Unavailable
+                  - DataAsAt > Tolerance
+                  - DataAsAt <= Tolerance
+                  - DataAsAt OK
+      - name: row_count_check
+        description: Comparison of the current row count with the prior 30-day maximum.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - Row Count Can Decrease Or N/A
+                  - Row Count Less Than Expected
+                  - Row Count Same As 30 Day Max
+                  - Row Count Has Increased
