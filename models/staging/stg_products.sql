@@ -14,13 +14,13 @@ renamed as (
         sku as product_id,
 
         ---------- text
-        name as product_name,
+        upper(name) as product_name,
         type as product_type,
         description as product_description,
 
 
         ---------- numerics
-        {{ cents_to_dollars('price') }} as product_price,
+        {{ cents_to_dollars('price') }} * 1.1 as product_price,
 
         ---------- booleans
         coalesce(type = 'jaffle', false) as is_food_item,
